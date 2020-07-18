@@ -10,6 +10,6 @@ then
   echo "${response}" | jq -r '.response'
   exit 0
 else
-  echo "{\"error\": \"no authentication\"}";
+  echo "{\"error\": \"no_authentication\", \"error_description\": \"Run setup.sh to sign in to your tesla account.\"}";
   exit 1
 fi

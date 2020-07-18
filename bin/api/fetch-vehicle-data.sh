@@ -16,13 +16,13 @@ then
   data=$(echo "${response}" | jq -r '.response')
   if [ "$data" == "null" ]
   then
-      echo "{\"error\": \"invalid_id\", \"error_description\": \"no vehicle for id '$id'\"}";
+      echo "{\"error\": \"invalid_id\", \"error_description\": \"No vehicle with id '$id' found in your tesla account.\"}";
   exit 1
   else
     echo "$data"
   fi
   exit 0
 else
-  echo "{\"error\": \"no_authentication\"}";
+  echo "{\"error\": \"no_authentication\", \"error_description\": \"Run setup.sh to sign in to your tesla account.\"}";
   exit 1
 fi
