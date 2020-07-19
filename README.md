@@ -1,4 +1,4 @@
-# Tesla Owner-API Wrapper
+# Tesla vehicle data fetch tools
 
 Fetches vehicle data via curl from the tesla owners API  and saves them as JSON-File. Periodic updates with cronjob.
 Provides PHP endpoint to access saved vehicle data as JSON over http without authentication.
