@@ -1,8 +1,8 @@
 #!/bin/bash
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
-sh "./bin/check-dependencies.sh"
+bash "./bin/check-dependencies.sh"
 [ $? -eq 0 ] || exit 1
-access_token=$(sh "./bin/config/read.sh" -s api -k access_token)
+access_token=$(bash "./bin/config/read.sh" -s api -k access_token)
 [ $? -eq 0 ] || exit 1
 id=$(echo "$1" | xargs)
 if [ "$id"  == '' ] || [ "$id"  == 'null' ]

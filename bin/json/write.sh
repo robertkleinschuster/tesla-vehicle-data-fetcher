@@ -1,6 +1,6 @@
 #!/bin/bash
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
-sh "./bin/check-dependencies.sh"
+bash "./bin/check-dependencies.sh"
 [ $? -eq 0 ] || exit 1
 while getopts ":f:k:v:" opt; do
   case $opt in

@@ -1,6 +1,6 @@
 #!/bin/bash
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
-access_token=$(sh "./bin/config/read.sh" -s api -k access_token)
+access_token=$(bash "./bin/config/read.sh" -s api -k access_token)
 [ $? -eq 0 ] || exit 1
 if [ "$access_token" != "null" ]
 then
@@ -11,11 +11,11 @@ do
 	if [ $clear == "y" ]
 	then
 	  echo "Clearing previous configuration..."
-	  sh "./bin/config/write.sh" -s api -k access_token -v null
+	  bash "./bin/config/write.sh" -s api -k access_token -v null
 	  [ $? -eq 0 ] || exit 1
-	  sh "./bin/config/write.sh" -s api -k refresh_token -v null
+	  bash "./bin/config/write.sh" -s api -k refresh_token -v null
 	  [ $? -eq 0 ] || exit 1
-	  sh "./bin/config/write.sh" -s api -k id -v null
+	  bash "./bin/config/write.sh" -s api -k id -v null
 	  [ $? -eq 0 ] || exit 1
 		break
 	elif [ $clear == "n" ]
@@ -29,7 +29,7 @@ fi
 echo "Please login with your Tesla account."
 read -p "E-Mail: " email
 read -p "Password: " password
-sh "./bin/api/authenticate.sh" "$email" "$password"
+bash "./bin/api/authenticate.sh" "$email" "$password"
 [ $? -eq 0 ] || exit 1
 echo "Loading vehicle list..."
 vehiclesJson=$(sh "./bin/api/fetch-vehicle-list.sh")
@@ -68,6 +68,6 @@ for row in $vehicleList; do
     fi
    let index++
 done
-sh "./bin/config/write.sh" -s api -k id -v "$id"
+bash "./bin/config/write.sh" -s api -k id -v "$id"
 [ $? -eq 0 ] || exit 1
 echo "DONE!";
