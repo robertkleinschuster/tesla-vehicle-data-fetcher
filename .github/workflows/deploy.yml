@@ -13,9 +13,9 @@ jobs:
       - name: Install Dependencies
         run: sudo apt-get install -y jq
       - name: Configure Authentication
-        run: cd bin && sh api/authenticate.sh ${{ secrets.NICEMOBIL_USERNAME }} ${{ secrets.NICEMOBIL_PASSWORD }}
+        run: sh ./bin/api/authenticate.sh ${{ secrets.NICEMOBIL_USERNAME }} ${{ secrets.NICEMOBIL_PASSWORD }}
       - name: Configure ID
-        run: sh config/write.sh -s api -k id -v ${{ secrets.NICEMOBIL_ID }}
+        run: sh ./bin/config/write.sh -s api -k id -v ${{ secrets.NICEMOBIL_ID }}
       - name: Deploy
         uses: wlixcc/SFTP-Deploy-Action@v1.0
         with:
