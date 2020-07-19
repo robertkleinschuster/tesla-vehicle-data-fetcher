@@ -1,4 +1,4 @@
-name: Deploy Nicemobil Live
+name: Deploy Nicemobil Live Backend
 
 on:
   push:
