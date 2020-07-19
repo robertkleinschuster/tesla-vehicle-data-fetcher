@@ -1,6 +1,6 @@
 #!/bin/bash
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
-sh "$parent_path/../check-dependencies.sh"
+sh "./bin/check-dependencies.sh"
 [ $? -eq 0 ] || exit 1
 
 while getopts ":r" opt; do
@@ -14,7 +14,7 @@ done
 
 if [ "$refresh" == "true" ]
 then
-  refresh_token=$(sh "$parent_path/../config/read.sh" -s api -k refresh_token)
+  refresh_token=$(sh "./bin/config/read.sh" -s api -k refresh_token)
   [ $? -eq 0 ] || exit 1
   if [ "$refresh_token" != 'null' ] && [ "$refresh_token" ]
   then
@@ -27,9 +27,9 @@ then
 else
   email=$1
   password=$2
-  client_id=$(sh "$parent_path/../config/read.sh" -s api -k client_id)
+  client_id=$(sh "./bin/config/read.sh" -s api -k client_id)
   [ $? -eq 0 ] || exit 1
-  client_secret=$(sh "$parent_path/../config/read.sh" -s api -k client_secret)
+  client_secret=$(sh "./bin/config/read.sh" -s api -k client_secret)
   [ $? -eq 0 ] || exit 1
   response=$(curl -s -H "Content-Type: application/json" -d "{\"grant_type\" : \"password\", \"client_id\" : \"$client_id\", \"client_secret\" : \"$client_secret\", \"email\" : \"$email\", \"password\" : \"$password\"}" https://owner-api.teslamotors.com/oauth/token)
 fi
@@ -40,9 +40,9 @@ access_token=$(echo "${response}" | jq -r '.access_token')
 refresh_token=$(echo "${response}" | jq -r '.refresh_token')
 if [ "$access_token" != "null" ] && [ "$refresh_token" != 'null' ]
 then
-  sh "$parent_path/../config/write.sh" -s "api" -k "refresh_token" -v "$refresh_token"
+  sh "./bin/config/write.sh" -s "api" -k "refresh_token" -v "$refresh_token"
   [ $? -eq 0 ] || exit 1
-  sh "$parent_path/../config/write.sh" -s "api" -k "access_token" -v "$access_token"
+  sh "./bin/config/write.sh" -s "api" -k "access_token" -v "$access_token"
   [ $? -eq 0 ] || exit 1
   exit 0
 else

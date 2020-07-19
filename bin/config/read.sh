@@ -1,6 +1,6 @@
 #!/bin/bash
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
-sh "$parent_path/../check-dependencies.sh"
+sh "./bin/check-dependencies.sh"
 [ $? -eq 0 ] || exit 1
 while getopts ":s:k:" opt; do
   case $opt in
@@ -12,5 +12,5 @@ while getopts ":s:k:" opt; do
     ;;
   esac
 done
-sh "$parent_path/../json/read.sh" -f "$parent_path/../../config/$scope.json" -k "$key"
+sh "./bin/json/read.sh" -f "./config/$scope.json" -k "$key"
 [ $? -eq 0 ] || exit 1
