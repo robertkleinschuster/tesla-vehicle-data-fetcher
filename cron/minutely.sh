@@ -1,2 +1,6 @@
 #!/bin/bash
-sh ../bin/update-vehicle-data.sh
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+cd $parent_path
+cd ..
+bash "$parent_path/../bin/update-vehicle-data.sh"
+
