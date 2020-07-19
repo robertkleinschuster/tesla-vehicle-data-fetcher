@@ -12,4 +12,4 @@ while getopts ":f:k:" opt; do
     ;;
   esac
 done
-cat "$file" | ./bin/json/jq ".$key"  | sed 's/["]//g';
+cat "$file" | sudo ./bin/json/jq ".$key"  | sed 's/["]//g';

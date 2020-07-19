@@ -14,4 +14,4 @@ while getopts ":f:k:v:" opt; do
     ;;
   esac
 done
-./bin/json/jq ".$key = \"$value\"" "$file" > "$file.tmp.$$.json" && mv "$file.tmp.$$.json" "$file"
+sudo ./bin/json/jq ".$key = \"$value\"" "$file" > "$file.tmp.$$.json" && mv "$file.tmp.$$.json" "$file"
