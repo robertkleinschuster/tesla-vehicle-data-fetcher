@@ -13,24 +13,7 @@ while getopts ":f:k:" opt; do
   esac
 done
 
-unameOut="$(uname -s)"
-case "${unameOut}" in
-    Linux*)     machine=Linux;;
-    Darwin*)    machine=Mac;;
-    CYGWIN*)    machine=Cygwin;;
-    MINGW*)     machine=MinGw;;
-    *)          machine="UNKNOWN:${unameOut}"
-esac
+jq=$(bash ./bin/json/jq-name.sh)
+[ $? -eq 0 ] || exit 1
 
-
-if [ "$machine" == "Linux" ]
-then
-  chmod +x ./bin/json/jq-linux64
-  cat "$file" | ./bin/json/jq-linux64 ".$key"  | sed 's/["]//g';
-elif [ "$machine" == "Mac" ];
-then
-    chmod +x ./bin/json/jq-osx-amd64
-  cat "$file" | ./bin/json/jq-osx-amd64 ".$key"  | sed 's/["]//g';
-else
-  echo "ERROR: No JSON library for platform $machine"
-fi
+cat "$file" | $jq ".$key"  | sed 's/["]//g';

@@ -1,5 +1,7 @@
 #!/bin/bash
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+jq=$(bash ./bin/json/jq-name.sh)
+[ $? -eq 0 ] || exit 1
 access_token=$(bash "./bin/config/read.sh" -s api -k access_token)
 [ $? -eq 0 ] || exit 1
 if [ "$access_token" != "null" ]
@@ -28,7 +30,7 @@ done
 fi
 echo "Please login with your Tesla account."
 read -p "E-Mail: " email
-read -p "Password: " password
+read -s -p "Password: " password
 bash "./bin/api/authenticate.sh" "$email" "$password"
 [ $? -eq 0 ] || exit 1
 echo "Loading vehicle list..."
@@ -36,10 +38,10 @@ vehiclesJson=$(sh "./bin/api/fetch-vehicle-list.sh")
 [ $? -eq 0 ] || exit 1
 echo "Available vehicles:"
 let index=1
-vehicleList=$(echo "${vehiclesJson}" | jq -r '.[] | @base64');
+vehicleList=$(echo "${vehiclesJson}" | $jq -r '.[] | @base64');
 for row in $vehicleList; do
     _jq() {
-     echo ${row} | base64 --decode | jq -r ${1}
+     echo ${row} | base64 --decode | $jq -r ${1}
     }
    echo "$index: $(_jq '.display_name'), VIN: $(_jq '.vin')"
    let index++
@@ -47,7 +49,7 @@ done
 while :
 do
   read -p "Please enter the number of the desired vehicle: " number
-	if [ $number -gt 0 ] && [ $number -le $index ]
+	if [ $number != '' ] && [ $number -gt 0 ] && [ $number -le $index ]
 	then
 		break
 		else
@@ -58,7 +60,7 @@ id="null"
 let index=1
 for row in $vehicleList; do
     _jq() {
-     echo ${row} | base64 --decode | jq -r ${1}
+     echo ${row} | base64 --decode | $jq -r ${1}
     }
     if [ $index -eq $number ]
     then

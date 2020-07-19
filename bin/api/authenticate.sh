@@ -2,7 +2,8 @@
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 bash "./bin/check-dependencies.sh"
 [ $? -eq 0 ] || exit 1
-
+jq=$(bash ./bin/json/jq-name.sh)
+[ $? -eq 0 ] || exit 1
 while getopts ":r" opt; do
   case $opt in
     r) refresh="true"
@@ -34,10 +35,10 @@ else
   response=$(curl -s -H "Content-Type: application/json" -d "{\"grant_type\" : \"password\", \"client_id\" : \"$client_id\", \"client_secret\" : \"$client_secret\", \"email\" : \"$email\", \"password\" : \"$password\"}" https://owner-api.teslamotors.com/oauth/token)
 fi
 
-error=$(echo "${response}" | jq -r '.error')
-error_description=$(echo "${response}" | jq -r '.error_description')
-access_token=$(echo "${response}" | jq -r '.access_token')
-refresh_token=$(echo "${response}" | jq -r '.refresh_token')
+error=$(echo "${response}" | $jq -r '.error')
+error_description=$(echo "${response}" | $jq -r '.error_description')
+access_token=$(echo "${response}" | $jq -r '.access_token')
+refresh_token=$(echo "${response}" | $jq -r '.refresh_token')
 if [ "$access_token" != "null" ] && [ "$refresh_token" != 'null' ]
 then
   bash "./bin/config/write.sh" -s "api" -k "refresh_token" -v "$refresh_token"
