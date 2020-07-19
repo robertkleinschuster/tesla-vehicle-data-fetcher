@@ -4,6 +4,6 @@ bash "./bin/check-dependencies.sh"
 [ $? -eq 0 ] || exit 1
 id=$(bash "./bin/config/read.sh" -s api -k id)
 [ $? -eq 0 ] || exit 1
-bash "./bin/api/fetch-vehicle-data.sh" $id > "./bin/data/vehicle_data.json"
+bash "./bin/api/fetch-vehicle-data.sh" $id > "./data/vehicle_data.json"
 [ $? -eq 0 ] || exit 1
 exit 0
