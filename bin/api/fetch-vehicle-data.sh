@@ -16,7 +16,8 @@ if [ "$access_token" != 'null' ] && [ "$access_token" ] && [ "$id" != 'null' ] &
 then
   response=$(curl -s -H "Authorization: Bearer $access_token" "https://owner-api.teslamotors.com/api/1/vehicles/$id/vehicle_data")
   data=$(echo "${response}" | $jq -r '.response')
-  if [ "$data" == "null" ]
+  display_name=$(echo "${data}" | $jq -r '.display_name')
+  if [ "$data" == "null" ] || [ "$display_name" == "null" ]
   then
       echo "{\"error\": \"invalid_id\", \"error_description\": \"No vehicle with id '$id' found in your tesla account.\"}";
   exit 1
