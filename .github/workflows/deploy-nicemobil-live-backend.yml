@@ -17,9 +17,9 @@ jobs:
       - name: Deploy
         uses: wlixcc/SFTP-Deploy-Action@v1.0
         with:
-          username: 'lipo'
+          username: 'live_sonice_at'
           server: '${{ secrets.SERVER_DOMAIN }}'
           ssh_private_key: ${{ secrets.SERVER_KEY }}
           local_path: '*'
-          remote_path: '/home/lipo/web/live.sonice.at'
+          remote_path: '/'
           args: '-o ConnectTimeout=5'
