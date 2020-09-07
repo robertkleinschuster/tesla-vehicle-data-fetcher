@@ -21,5 +21,5 @@ jobs:
           server: '${{ secrets.SERVER_DOMAIN }}'
           ssh_private_key: ${{ secrets.SERVER_KEY }}
           local_path: '*'
-          remote_path: '/'
+          remote_path: '/tesla_data/'
           args: '-o ConnectTimeout=5'
